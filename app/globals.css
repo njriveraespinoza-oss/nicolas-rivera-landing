@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #111110;
+  --ivory: #f4f1e8;
+  --ivory-deep: #ebe4d6;
+  --paper: #faf7f0;
+  --red: #8f1d1d;
+  --red-deep: #6e1515;
+  --warm: #6a645c;
+  --warm-strong: #4a4540;
+  --line: #d6cfc2;
+  --line-strong: #111110;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ivory: var(--ivory);
+  --color-ivory-deep: var(--ivory-deep);
+  --color-paper: var(--paper);
+  --color-red: var(--red);
+  --color-red-deep: var(--red-deep);
+  --color-warm: var(--warm);
+  --color-warm-strong: var(--warm-strong);
+  --color-line: var(--line);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-body);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-body), "Source Sans 3", system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--ivory);
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-family: var(--font-display), "Archivo Narrow", sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Newsreader, Georgia, serif;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.grid-page {
+  background-image:
+    linear-gradient(to right, rgba(17, 17, 16, 0.05) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%;
+  background-position: center;
+}
+
+@media (max-width: 767px) {
+  .grid-page {
+    background-size: calc(100% / 4) 100%;
+  }
+}
+
+.rule {
+  height: 1px;
+  background: var(--line);
+}
+
+.rule-strong {
+  height: 1px;
+  background: var(--ink);
+}
+
+.num {
+  font-family: var(--font-display), "Archivo Narrow", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+.bg-ink .num {
+  color: #f3c2c2;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal-up 0.6s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
+}
