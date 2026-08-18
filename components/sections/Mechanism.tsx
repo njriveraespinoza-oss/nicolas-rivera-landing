@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { mechanism } from "@/config/copy";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
+import { Pipeline } from "@/components/ui/Pipeline";
 import { track } from "@/lib/analytics";
 import { cx } from "@/lib/cx";
 
-const STEP_MS = 14000;
+const STEP_MS = 6500;
 
 export function Mechanism() {
   const [index, setIndex] = useState(0);
@@ -66,12 +67,12 @@ export function Mechanism() {
       dark
     >
       <div className="mb-8 flex flex-wrap items-center gap-3">
-        <Button variant="invert" onClick={playing ? () => setPlaying(false) : play}>
+        <Button variant="invert" onClick={playing ? () => setPlaying(false) : play} arrow={!playing}>
           {playing ? mechanism.pause : index > 0 ? mechanism.resume : mechanism.play}
         </Button>
         <Button
           variant="ghost"
-          className="text-ivory hover:text-ivory hover:border-ivory"
+          className="text-ivory hover:border-ivory hover:text-ivory"
           onClick={() => {
             setPlaying(false);
             setIndex(mechanism.steps.length - 1);
@@ -82,7 +83,11 @@ export function Mechanism() {
         <p className="text-sm text-ivory/80">{mechanism.playingHint}</p>
       </div>
 
-      <ol className="mb-8 flex flex-wrap gap-2" aria-label="Étapes du système">
+      <div className="mb-10 hidden md:block">
+        <Pipeline active={index} onSelect={(i) => { setPlaying(false); setIndex(i); }} dark />
+      </div>
+
+      <ol className="mb-8 flex flex-wrap gap-2 md:hidden" aria-label="Étapes du système">
         {mechanism.steps.map((s, i) => (
           <li key={s.id}>
             <button
@@ -103,7 +108,7 @@ export function Mechanism() {
         ))}
       </ol>
 
-      <article className="border border-ivory/25 p-6 md:p-10" aria-live="polite">
+      <article key={step.id} className="artifact-enter border border-ivory/25 p-6 md:p-10" aria-live="polite">
         <p className="num text-sm">
           {String(index + 1).padStart(2, "0")} / {String(mechanism.steps.length).padStart(2, "0")}
         </p>
@@ -115,21 +120,11 @@ export function Mechanism() {
           <Role label="Vous" text={step.client} />
         </div>
         {playing ? (
-          <div className="mt-8 h-px w-full overflow-hidden bg-ivory/20" aria-hidden>
-            <div
-              key={step.id}
-              className="h-px bg-red"
-              style={{ animation: `progress ${STEP_MS}ms linear` }}
-            />
+          <div className="progress-bar mt-8" aria-hidden>
+            <span style={{ animationDuration: `${STEP_MS}ms` }} />
           </div>
         ) : null}
       </article>
-      <style>{`
-        @keyframes progress { from { width: 0 } to { width: 100% } }
-        @media (prefers-reduced-motion: reduce) {
-          @keyframes progress { from { width: 100% } to { width: 100% } }
-        }
-      `}</style>
     </Section>
   );
 }

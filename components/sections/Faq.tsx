@@ -14,7 +14,7 @@ export function Faq() {
                 <span className="num mr-3 text-sm">{String(i + 1).padStart(2, "0")}</span>
                 {item.q}
               </span>
-              <span aria-hidden className="mt-1 font-display text-warm transition group-open:rotate-45">
+              <span aria-hidden className="mt-1 font-display text-warm transition-transform duration-300 group-open:rotate-45">
                 +
               </span>
             </summary>

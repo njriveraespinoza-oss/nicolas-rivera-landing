@@ -11,6 +11,7 @@
   --warm-strong: #4a4540;
   --line: #d6cfc2;
   --line-strong: #111110;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -30,6 +31,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.25rem;
   background: var(--ivory);
   color: var(--ink);
 }
@@ -45,6 +47,13 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .will-reveal,
+  .is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
 
@@ -81,8 +90,7 @@ summary::-webkit-details-marker {
 }
 
 .grid-page {
-  background-image:
-    linear-gradient(to right, rgba(17, 17, 16, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(17, 17, 16, 0.055) 1px, transparent 1px);
   background-size: calc(100% / 12) 100%;
   background-position: center;
 }
@@ -91,16 +99,6 @@ summary::-webkit-details-marker {
   .grid-page {
     background-size: calc(100% / 4) 100%;
   }
-}
-
-.rule {
-  height: 1px;
-  background: var(--line);
-}
-
-.rule-strong {
-  height: 1px;
-  background: var(--ink);
 }
 
 .num {
@@ -115,10 +113,44 @@ summary::-webkit-details-marker {
   color: #f3c2c2;
 }
 
-@keyframes reveal-up {
+.will-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(4px);
+}
+
+.is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out),
+    filter 0.8s var(--ease-out);
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-line span {
+  display: block;
+  animation: line-up 0.9s var(--ease-out) both;
+}
+
+.hero-line:nth-child(2) span {
+  animation-delay: 0.1s;
+}
+
+.hero-line:nth-child(3) span {
+  animation-delay: 0.2s;
+}
+
+@keyframes line-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(110%);
   }
   to {
     opacity: 1;
@@ -126,12 +158,265 @@ summary::-webkit-details-marker {
   }
 }
 
-.reveal {
-  animation: reveal-up 0.6s ease both;
+.pipeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+}
+
+.pipeline-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.pipeline-line {
+  display: block;
+  height: 1px;
+  width: 100%;
+  min-width: 12px;
+  background: var(--line);
+  transform-origin: left;
+  transition: background 0.4s ease;
+}
+
+.pipeline-line.is-on {
+  background: var(--red);
+}
+
+.pipeline-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 4.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+div.pipeline-node {
+  cursor: default;
+}
+
+.pipeline-index {
+  font-family: var(--font-display), "Archivo Narrow", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--warm);
+}
+
+.pipeline-label {
+  font-family: var(--font-display), "Archivo Narrow", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.pipeline-node.is-current .pipeline-index,
+.pipeline-node.is-done .pipeline-index {
+  color: var(--red);
+}
+
+.pipeline-node.is-current .pipeline-label {
+  color: var(--ink);
+}
+
+.pipeline-dark .pipeline-line {
+  background: rgba(244, 241, 232, 0.22);
+}
+
+.pipeline-dark .pipeline-line.is-on {
+  background: #f3c2c2;
+}
+
+.pipeline-dark .pipeline-index {
+  color: rgba(244, 241, 232, 0.55);
+}
+
+.pipeline-dark .pipeline-label {
+  color: rgba(244, 241, 232, 0.7);
+}
+
+.pipeline-dark .pipeline-node.is-current .pipeline-index,
+.pipeline-dark .pipeline-node.is-done .pipeline-index {
+  color: #f3c2c2;
+}
+
+.pipeline-dark .pipeline-node.is-current .pipeline-label {
+  color: var(--ivory);
+}
+
+.pipeline-compact .pipeline-label {
+  font-size: 0.68rem;
+}
+
+.system-rail {
+  overflow: hidden;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.system-rail-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  padding: 0.85rem 0;
+  animation: rail 32s linear infinite;
+}
+
+.system-rail-item {
+  font-family: var(--font-display), "Archivo Narrow", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.system-rail-sep {
+  color: #f3c2c2;
+}
+
+@keyframes rail {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.scatter {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  height: 72px;
+}
+
+.scatter span {
+  background: var(--line);
+  animation: scatter-pulse 3.6s var(--ease-out) infinite;
+}
+
+.scatter span:nth-child(odd) {
+  transform: translateY(8px);
+}
+
+.scatter span:nth-child(3n) {
+  height: 70%;
+  align-self: end;
+}
+
+@keyframes scatter-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hub {
+  display: grid;
+  place-items: center;
+  height: 72px;
+  position: relative;
+}
+
+.hub-core {
+  width: 14px;
+  height: 14px;
+  background: var(--ivory);
+  z-index: 1;
+}
+
+.hub::before,
+.hub::after {
+  content: "";
+  position: absolute;
+  inset: 18px 12%;
+  border: 1px solid rgba(244, 241, 232, 0.28);
+}
+
+.hub::after {
+  inset: 28px 22%;
+}
+
+.artifact-enter {
+  animation: artifact 0.45s var(--ease-out) both;
+}
+
+@keyframes artifact {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.slide-card {
+  min-height: 160px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  height: 1px;
+  background: rgba(244, 241, 232, 0.2);
+  overflow: hidden;
+}
+
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  background: #f3c2c2;
+  animation: progress-fill linear;
+  transform-origin: left;
+}
+
+@keyframes progress-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    animation: none;
+  .hero-line span,
+  .system-rail-track,
+  .scatter span,
+  .artifact-enter,
+  .progress-bar > span {
+    animation: none !important;
+  }
+
+  .system-rail-track {
+    transform: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

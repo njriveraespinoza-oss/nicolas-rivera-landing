@@ -1,6 +1,7 @@
 import { about } from "@/config/copy";
 import { site } from "@/config/site";
 import { Section } from "@/components/ui/Section";
+import { Frame } from "@/components/ui/Frame";
 
 export function About() {
   return (
@@ -36,6 +37,7 @@ export function About() {
           </div>
         </div>
         <aside className="lg:col-span-5">
+          <Frame>
           {site.photo.src ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -59,6 +61,7 @@ export function About() {
               <p className="text-sm text-warm">{about.photoMissing}</p>
             </div>
           )}
+          </Frame>
         </aside>
       </div>
     </Section>

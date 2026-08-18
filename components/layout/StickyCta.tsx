@@ -31,9 +31,9 @@ export function StickyCta() {
   if (!visible) return null;
 
   return (
-    <div className="pointer-events-none fixed right-0 top-1/3 z-40 hidden xl:block">
-      <div className="pointer-events-auto origin-right -rotate-90 translate-x-[42%] translate-y-16">
-        <Button href={nav.ctaHref} className="min-h-10 rounded-none px-5 py-2 text-[0.7rem] shadow-sm">
+    <div className="pointer-events-none fixed bottom-5 right-5 z-40 hidden md:block">
+      <div className="pointer-events-auto">
+        <Button href={nav.ctaHref} arrow className="min-h-11 px-5 py-2 text-[0.72rem] shadow-[0_12px_30px_rgba(17,17,16,0.12)]">
           {nav.cta}
         </Button>
       </div>

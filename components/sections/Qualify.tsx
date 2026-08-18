@@ -188,7 +188,7 @@ export function Qualify() {
           ) : null}
 
           <div className="mt-8">
-            <Button type="submit" variant="invert" disabled={submitting} className="w-full sm:w-auto">
+            <Button type="submit" variant="invert" disabled={submitting} className="w-full sm:w-auto" arrow={!submitting}>
               {submitting ? qualify.submitting : qualify.submit}
             </Button>
           </div>

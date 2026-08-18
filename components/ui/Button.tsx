@@ -23,6 +23,7 @@ type Props = {
   onClick?: () => void;
   disabled?: boolean;
   ariaLabel?: string;
+  arrow?: boolean;
 };
 
 export function Button({
@@ -34,14 +35,25 @@ export function Button({
   onClick,
   disabled,
   ariaLabel,
+  arrow,
 }: Props) {
   const cls = cx(
-    "inline-flex items-center justify-center gap-2 font-display text-[0.95rem] font-semibold tracking-[0.04em] uppercase",
+    "group inline-flex items-center justify-center gap-2 font-display text-[0.95rem] font-semibold tracking-[0.04em] uppercase",
     variant !== "ghost" && "min-h-12 px-6 py-3",
-    "transition-colors duration-200",
+    "transition-colors duration-300",
     "disabled:cursor-not-allowed disabled:opacity-50",
     styles[variant],
     className,
+  );
+  const content = (
+    <>
+      {children}
+      {arrow ? (
+        <span aria-hidden className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
+      ) : null}
+    </>
   );
 
   if (href) {
@@ -49,20 +61,20 @@ export function Button({
     if (external) {
       return (
         <a href={href} className={cls} onClick={onClick} aria-label={ariaLabel}>
-          {children}
+          {content}
         </a>
       );
     }
     return (
       <Link href={href} className={cls} onClick={onClick} aria-label={ariaLabel}>
-        {children}
+        {content}
       </Link>
     );
   }
 
   return (
     <button type={type} className={cls} onClick={onClick} disabled={disabled} aria-label={ariaLabel}>
-      {children}
+      {content}
     </button>
   );
 }

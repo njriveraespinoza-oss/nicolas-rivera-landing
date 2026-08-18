@@ -109,7 +109,7 @@ export function Diagnostic() {
           </div>
         </div>
 
-        <div className="p-5 md:p-8">
+        <div key={step} className="artifact-enter p-5 md:p-8">
           {step === "profile" && (
             <ChoiceGroup
               question={diagnosticCopy.steps.profile.question}
@@ -161,10 +161,10 @@ export function Diagnostic() {
             <div>
               <p className="font-serif text-2xl italic leading-snug md:text-3xl">{result.headline}</p>
               <p className="mt-4 text-warm-strong">{result.sourceLine}</p>
-              <ul className="mt-8 space-y-3">
+              <ul className="mt-8 space-y-0 border-l-2 border-red">
                 {result.system.map((item) => (
-                  <li key={item} className="flex gap-3 border-t border-line pt-3">
-                    <span className="num text-sm">—</span>
+                  <li key={item} className="flex gap-3 border-t border-line py-3 pl-5 first:border-t-0">
+                    <span className="num text-sm">→</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -173,7 +173,7 @@ export function Diagnostic() {
               <p className="mt-3 font-medium">{result.firstMove}</p>
               <p className="mt-6 text-sm text-warm">{diagnosticCopy.noRevenueNote}</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button href="#candidater">
+                <Button href="#candidater" arrow>
                   {diagnosticCopy.optionalCta}
                 </Button>
                 <Button variant="secondary" onClick={reset}>

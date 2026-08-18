@@ -67,8 +67,8 @@ export function Offers() {
               id={`offre-${offer.id}`}
               data-offer={offer.id}
               className={cx(
-                "flex flex-col border p-6 md:p-8",
-                highlighted ? "border-red bg-paper" : "border-ink bg-ivory",
+                "flex flex-col border p-6 transition-colors duration-300 md:p-8",
+                highlighted ? "border-red bg-paper" : "border-ink bg-ivory hover:border-red",
               )}
             >
               <div className="flex items-baseline justify-between gap-4">
@@ -78,6 +78,11 @@ export function Offers() {
                 </span>
               </div>
               <h3 className="mt-4 font-display text-3xl font-semibold">{offer.name}</h3>
+              {offer.id === "engine" ? (
+                <p className="mt-2 font-display text-[0.65rem] uppercase tracking-[0.16em] text-red">
+                  Le rythme du système
+                </p>
+              ) : null}
               <p className="mt-4 text-warm-strong">{offer.summary}</p>
               <p className="mt-6 font-display text-xl font-semibold tracking-tight">{price}</p>
               {setupKey && recKey && setup !== null && recurring !== null ? (
@@ -98,6 +103,7 @@ export function Offers() {
                   href="#candidater"
                   variant={highlighted ? "primary" : "secondary"}
                   className="w-full"
+                  arrow
                   onClick={() => {
                     highlightOffer(offer.id);
                     track("offer_select", { offer_id: offer.id, source: "offer_card" });

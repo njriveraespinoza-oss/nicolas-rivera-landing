@@ -1,4 +1,5 @@
 import { cx } from "@/lib/cx";
+import { Reveal } from "@/components/ui/Reveal";
 
 type Props = {
   id: string;
@@ -23,7 +24,7 @@ export function Section({ id, number, eyebrow, title, intro, children, className
     >
       <div className="mx-auto max-w-6xl">
         {(number || eyebrow || title) && (
-          <header className="mb-10 max-w-3xl md:mb-14">
+          <Reveal as="header" className="mb-10 max-w-3xl md:mb-14">
             <div className="mb-4 flex items-baseline gap-4">
               {number ? <span className="num text-sm">{number}</span> : null}
               {eyebrow ? (
@@ -42,7 +43,7 @@ export function Section({ id, number, eyebrow, title, intro, children, className
                 {intro}
               </p>
             ) : null}
-          </header>
+          </Reveal>
         )}
         {children}
       </div>

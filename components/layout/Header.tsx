@@ -35,8 +35,9 @@ export function Header() {
       <div className="flex items-center justify-between gap-4 px-[6vw] py-3 md:py-4">
         <Link
           href="/"
-          className="font-display text-lg font-semibold tracking-tight md:text-xl"
+          className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight md:text-xl"
         >
+          <span aria-hidden className="inline-block h-2.5 w-2.5 bg-red" />
           {site.brandName}
         </Link>
 
@@ -45,7 +46,7 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="font-display text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-warm-strong hover:text-ink"
+            className="font-display text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-warm-strong transition-colors hover:text-ink"
             >
               {item.label}
             </a>
@@ -53,7 +54,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={nav.ctaHref} className="min-h-10 px-4 py-2 text-[0.75rem]">
+          <Button href={nav.ctaHref} arrow className="min-h-10 px-4 py-2 text-[0.75rem]">
             {nav.cta}
           </Button>
         </div>

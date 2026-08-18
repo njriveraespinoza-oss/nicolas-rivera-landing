@@ -152,7 +152,7 @@ export const mechanism = {
   pause: "Pause",
   resume: "Reprendre",
   skip: "Voir toutes les étapes",
-  playingHint: "Lecture guidée — environ 90 secondes. Vous pouvez avancer à votre rythme.",
+  playingHint: "Lecture guidée. Chaque mouvement s’enchaîne — ou avancez à la main.",
   steps: [
     {
       id: "conversation",

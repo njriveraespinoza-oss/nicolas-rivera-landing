@@ -1,5 +1,6 @@
 import { dispersion } from "@/config/copy";
 import { Section } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function Dispersion() {
   return (
@@ -11,7 +12,12 @@ export function Dispersion() {
       intro={dispersion.intro}
     >
       <div className="grid border border-ink md:grid-cols-2">
-        <article className="border-b border-ink p-6 md:border-b-0 md:border-r md:p-8">
+        <Reveal as="article" className="border-b border-ink p-6 md:border-b-0 md:border-r md:p-8">
+          <div className="scatter mb-6" aria-hidden>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span key={i} style={{ animationDelay: `${i * 120}ms` }} />
+            ))}
+          </div>
           <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-warm">
             {dispersion.left.label}
           </p>
@@ -23,8 +29,11 @@ export function Dispersion() {
               </li>
             ))}
           </ul>
-        </article>
-        <article className="bg-ink p-6 text-ivory md:p-8">
+        </Reveal>
+        <Reveal as="article" delay={80} className="bg-ink p-6 text-ivory md:p-8">
+          <div className="hub mb-6" aria-hidden>
+            <span className="hub-core" />
+          </div>
           <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-ivory/80">
             {dispersion.right.label}
           </p>
@@ -36,7 +45,7 @@ export function Dispersion() {
               </li>
             ))}
           </ul>
-        </article>
+        </Reveal>
       </div>
       <p className="mt-10 max-w-3xl font-serif text-2xl italic leading-snug">{dispersion.cost}</p>
     </Section>

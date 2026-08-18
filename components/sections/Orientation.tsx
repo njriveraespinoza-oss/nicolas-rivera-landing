@@ -27,7 +27,7 @@ export function Orientation() {
               track("offer_select", { offer_id: offer.id, source: "orientation" });
               document.getElementById(`offre-${offer.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
             }}
-            className={`min-h-16 border px-5 py-4 text-left font-display text-lg font-semibold ${
+            className={`min-h-16 border px-5 py-4 text-left font-display text-lg font-semibold transition-colors duration-300 ${
               highlightedOffer === offer.id ? "border-ink bg-ink text-ivory" : "border-line hover:border-ink"
             }`}
           >
